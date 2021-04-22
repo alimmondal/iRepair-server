@@ -102,13 +102,6 @@ client.connect(err => {
   })
 
 
-
-
-
-
-
-
-
   app.get('/reviews', (req, res) => {
     reviewCollection.find()
     .toArray((err, reviews) => {
@@ -126,10 +119,6 @@ client.connect(err => {
       res.send(result.insertedCount > 0)
     })
   })
-
-
-
-
 
 
 });
