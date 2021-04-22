@@ -25,6 +25,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
   const serviceCollection = client.db("completeWebsite").collection("addServices");
   const appointmentCollection = client.db("iRepair").collection("appointments");
+  const reviewCollection = client.db("completeReviews").collection("review");
   console.log('db connected')
 
 
@@ -77,13 +78,13 @@ client.connect(err => {
     serviceCollection.find()
     .toArray((err, items) => {
       res.send(items);
-      console.log('from database', items) 
+      // console.log('from database', items) 
     })
   })
 
   app.post('/addServices', (req, res) => {
     const newService = req.body;
-    console.log('adding product', newService)
+    // console.log('adding product', newService)
     serviceCollection.insertOne(newService)
     .then(result => {
       console.log('inserted count', result.insertedCount)
@@ -99,6 +100,36 @@ client.connect(err => {
   
     })
   })
+
+
+
+
+
+
+
+
+
+  app.get('/reviews', (req, res) => {
+    reviewCollection.find()
+    .toArray((err, reviews) => {
+      res.send(reviews);
+      console.log('from database', reviews) 
+    })
+  })
+
+  app.post('/addReviews', (req, res) => {
+    const newReviews = req.body;
+    console.log('adding review', newReviews)
+    reviewCollection.insertOne(newReviews)
+    .then(result => {
+      console.log('inserted count', result.insertedCount)
+      res.send(result.insertedCount > 0)
+    })
+  })
+
+
+
+
 
 
 });
